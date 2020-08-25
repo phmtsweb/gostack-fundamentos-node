@@ -15,16 +15,17 @@ class GetBalanceService {
 
   public execute(): Balance {
     const transactions = this.transactionsRepository.all();
-    let income = 0;
-    let outcome = 0;
+    const entries = {
+      income: 0,
+      outcome: 0,
+    };
     transactions.forEach(transaction => {
-      if (transaction.type === 'income') {
-        income += transaction.value;
-      } else {
-        outcome += transaction.value;
+      if (transaction.type === 'income' || transaction.type === 'outcome') {
+        entries[transaction.type] += transaction.value;
       }
     });
-    const total: number = income - outcome;
+    const { income, outcome } = entries;
+    const total = income - outcome;
     return {
       income,
       outcome,
