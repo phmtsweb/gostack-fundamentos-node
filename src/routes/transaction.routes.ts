@@ -33,7 +33,7 @@ transactionRouter.post('/', (request, response) => {
       value,
       type,
     });
-    return response.json(transaction);
+    return response.status(201).json(transaction);
   } catch (err) {
     return response.status(400).json({ error: err.message });
   }
